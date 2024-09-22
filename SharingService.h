@@ -1,6 +1,8 @@
 #ifndef SHARING_SERVICE_H
 #define SHARING_SERVICE_H
 
+#include "guilib_global.h"
+
 #include <QCoreApplication>
 #include <QDBusConnection>
 #include <QDBusError>
@@ -19,17 +21,16 @@
 
 using namespace std;
 
-class SharingService : public QOBject {
+class QUILIBSHARED_EXPORT SharingService : public QObject {
 	Q_OBJECT
 	Q_CLASSINFO("D-Bus Interface", "com.system.sharing");
         public:
-		SharingService();
+		explicit SharingService(QObject *parent = nullptr);
 	public Q_SLOTS:
-		void RegisterService(string name,vector<string> supportedFormats);
+		void RegisterService(string e,vector<string> supportedFormats);
                 void OpenFile(string path);
 	        void OpenFileUsingService(string path,string service);
 };		
 
-#include "main.moc"
-
+//include "SharingService.moc"
 #endif // SHARING_SERVICE_H

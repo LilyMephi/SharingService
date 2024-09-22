@@ -1,8 +1,7 @@
-#icnlude "SharingService.h"
+#include "SharingService.h"
 
-using namespace SharingService
 
-SharingService() {
+SharingService::SharingService(QObject *parent) : QObject(parent) {
         // Регистрация сервиса на потоке D-Bus
         if (QDBusConnection::sessionBus().registerService("com.system.sharing")) {
             qDebug() << "Service registered successfully";
@@ -20,12 +19,12 @@ SharingService() {
         }
 }
  
-void RegisterService(string nam, vector<string> supFormats){
+void SharingService::RegisterService(string nam, vector<string> supFormats){
 	    // Преобразование типов 
-            const  QString name = formString(nam);
-	    const QStringList supportedFormats;
-	    for(int i = 0; i < supFormats; ++i){
-		    supportedFormats << fromString(supFormats.at(i));
+            const  QString name = QString::fromStdString(nam);
+	    QStringList supportedFormats;
+	    for(int i = 0; i < (int) supFormats.size(); ++i){
+		    supportedFormats << QString::fromStdString(supFormats.at(i));
 	    }
 	    //В config.txt  будем сохранят информацию о сервисах
 	    QFile configFile("config.txt");
@@ -74,9 +73,9 @@ void RegisterService(string nam, vector<string> supFormats){
 		
            configFile.close();
    }
-void OpenFile(string p){
+void SharingService:: OpenFile(string p){
 	  //приведение типов 
-	  QString path = fromString(p);
+	  QString path = QString::fromStdString(p);
 	  // Получаем информациу о файле
 	  QFileInfo fileInf(path);
 
@@ -132,13 +131,16 @@ void OpenFile(string p){
            }
 	   //Вывод найденого сервиса
 	   qDebug() << service << "can open " << formatFile;
+
+	   std::string service_s = service.toStdString();
+	   std::string path_s = path.toStdString();
 	   //Открываем файл с помощью найденного сервиса
-	   OpenFileUsingService(path, service);
+	   OpenFileUsingService(path_s, service_s);
    }
 
-void OpenFileUsingService(string p,string serv){	
-	   QString path = fromString(p);
-	   QString service = fromString(serv);
+void SharingService::OpenFileUsingService(string p,string serv){	
+	   QString path = QString::fromStdString(p);
+	   QString service = QString::fromStdString(serv);
            //Подклюячаемся к сервису
 	   QDBusInterface iface(service,"/", service, QDBusConnection::sessionBus());
 	   if(!iface.isValid()){
