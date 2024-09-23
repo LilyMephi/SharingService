@@ -23,14 +23,20 @@ using namespace std;
 
 class QUILIBSHARED_EXPORT SharingService : public QObject {
 	Q_OBJECT
-	Q_CLASSINFO("D-Bus Interface", "com.system.sharing");
+	 
         public:
-		explicit SharingService(QObject *parent = nullptr);
-	public Q_SLOTS:
-		void RegisterService(string e,vector<string> supportedFormats);
-                void OpenFile(string path);
-	        void OpenFileUsingService(string path,string service);
+		explicit SharingService(string service,vector<string> supportedFormats, function<void(const string path)> openFunc);
+		function<void(const string & path)>OpenFile;
+		
+	public slots:
+		void start();
+	private:
+		QString service;
+		QStringList supportedFormats;
+
 };		
 
-//include "SharingService.moc"
+
+
+//#include "SharingService.moc"
 #endif // SHARING_SERVICE_H

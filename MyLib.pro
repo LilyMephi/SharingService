@@ -4,9 +4,11 @@
    CONFIG += shared
    QT += dbus
    QT += widgets
+   QT +=core
+   QT -=gui
    
    DEFINES += QUILIB_LIBRARY
-   DEFINES += QUILIB_LIBRARY
+   DEFINES += QUILIB_LIBRARY 
 
    SOURCES += SharingService.cpp
    HEADERS += SharingService.h
