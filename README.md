@@ -10,14 +10,14 @@
 
 1. Клонируйте репозиторий или скачайте исходный код библиотеки:
 
-   `bash
+   ```bash
    git clone https://github.com/LilyMephi/SharingService.git
-   cd SharingService`
+   cd SharingService```
    
 
 2. Создайте проект с помощью `qmake`:
 
-  `bash
+  `
    qmake MyLib.pro`
    
 
