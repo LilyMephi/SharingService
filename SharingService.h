@@ -26,10 +26,12 @@ class QUILIBSHARED_EXPORT SharingService : public QObject {
 	 
         public:
 		explicit SharingService(string service,vector<string> supportedFormats, function<void(const string path)> openFunc);
-		function<void(const string & path)>OpenFile;
+		function<void(const string path)>onOpenFile;
+		
 		
 	public slots:
-		void start();
+		void start(const string path);
+		void OpenFile(QString path);
 	private:
 		QString service;
 		QStringList supportedFormats;

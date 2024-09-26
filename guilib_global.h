@@ -1,5 +1,5 @@
-#ifndef QUILIB_GLOBAL_H
-#define QUILIB_GLOBAL_H
+#ifndef GUILIB_GLOBAL_H
+#define GUILIB_GLOBAL_H
  
 #include <QtCore/qglobal.h>
  
