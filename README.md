@@ -45,7 +45,7 @@
 ## Примеры
 
 Библиотека содержит несколько примеров использования. Чтобы их запустить, ознакомьтесь с соответствующими файлами:
-   ``` bash
+   ```bash
     git clone https://github.com/LilyMephi/DBusSharing.git
     cd DBusSharing
     qmake project.pro
@@ -53,8 +53,9 @@
     qmake client.pro
     make
    ```
-    в разных терминалах запустите:
-    ```./service
+в разных терминалах запустите:
+    ```bash
+    ./service
     ./client /path/to/file
     ```
 
