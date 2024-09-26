@@ -10,27 +10,27 @@
 
 1. Клонируйте репозиторий или скачайте исходный код библиотеки:
 
-   bash
+   ```bash
    git clone https://github.com/LilyMephi/SharingService.git
-   cd SharingService
+   cd SharingService```
    
 
 2. Создайте проект с помощью `qmake`:
 
-   bash
-   qmake MyLib.pro
+  ``` bash
+   qmake MyLib.pro```
    
 
 3. Соберите библиотеку:
 
-   bash
-   make
+  ``` bash
+   make```
    
 
 4. Перед запуском приложения, экспортируйте переменную окружения `LD_LIBRARY_PATH`, указывая путь к вашей библиотеке:
 
-   bash
-   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/lib
+   ```bash
+   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/lib```
    
 
    Замените `/path/to/lib` на фактический путь к директории, где находится ваша динамическая библиотека.
@@ -42,16 +42,16 @@
 ## Примеры
 
 Библиотека содержит несколько примеров использования. Чтобы их запустить, ознакомьтесь с соответствующими файлами:
-    bash
+   ``` bash
     git clone https://github.com/LilyMephi/DBusSharing.git
     cd DBusSharing
     qmake project.pro
     make
     qmake client.pro
-    make
+    make```
     в разных терминалах запустите:
-    ./service
-    ./client /path/to/file
+    ```./service
+    ./client /path/to/file```
 
 ## Зависимости
 
