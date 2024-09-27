@@ -33,15 +33,13 @@ SharingService::~SharingService() {
     }
 
 void SharingService::OpenFile(const QString &path){
-	qDebug() << "Try to open File";
 	std::string path_s = path.toStdString();
 	this->OpenFile_s(path_s);
-	emit fileOpened(path);
+	//emit fileOpened(path);
 }
 
 void SharingService::start(const string path_s){
 	QString path = QString::fromStdString(path_s);
-	qDebug() << path;
 	//Подключаемся к интерфесу для регистрации нашего сервиса
 	iface = new QDBusInterface("com.system.sharing", "/", "com.system.sharing", QDBusConnection::sessionBus(),this);
         if (!iface->isValid()) {
@@ -49,7 +47,7 @@ void SharingService::start(const string path_s){
         	exit(-1);
         }
         
-	connect(this, &SharingService::fileOpened,this, &SharingService::OpenFile);
+	//connect(this, &SharingService::fileOpened,this, &SharingService::OpenFile);
         QDBusMessage reply = iface->call("RegisterService", service, supportedFormats);
         if (reply.type() == QDBusMessage::ErrorMessage) {
         	qDebug() << "Failed to connect to interface:" << reply.errorMessage();
@@ -69,6 +67,6 @@ void SharingService::start(const string path_s){
 				qDebug() << "Readin the  file was successfule";
 			}
         });
-	emit fileOpened(path);
+	//emit fileOpened(path);
 }
 
