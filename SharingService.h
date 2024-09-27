@@ -13,6 +13,8 @@
 #include <QtWidgets> 
 #include <QVector>
 #include <QDBusReply>
+#include <QDBusMessage>
+#include <QDBusPendingCall>
 
 #include <string>
 #include <vector>
@@ -23,18 +25,22 @@ using namespace std;
 
 class QUILIBSHARED_EXPORT SharingService : public QObject {
 	Q_OBJECT
-	 
+	Q_CLASSINFO("D-Bus Interface", "com.sharing.service")
         public:
 		explicit SharingService(string service,vector<string> supportedFormats, function<void(const string path)> openFunc);
-		function<void(const string path)>onOpenFile;
-		
-		
-	public slots:
+		~SharingService();
+		function<void(const string path)>OpenFile_s;
 		void start(const string path);
-		void OpenFile(QString path);
+		
+		
+	signals:
+		void fileOpened(const QString &path);
+	private slots:
+		void OpenFile(const QString &path);
 	private:
 		QString service;
 		QStringList supportedFormats;
+		QDBusInterface *iface;
 
 };		
 
