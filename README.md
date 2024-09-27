@@ -70,6 +70,8 @@
 
 ---
 ###Использование библиотеки 
-`SharingService(name_serviec:string, supportedFormats: vector<string>,openFunction:function<void(const string path)>)`
-`start(path:string)`
+```c++
+   SharingService(name_serviec:string, supportedFormats: vector<string>,openFunction:function<void(const string path)>)`
+   start(path:string)
+```
 
