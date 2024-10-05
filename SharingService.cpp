@@ -11,26 +11,20 @@ SharingService::SharingService(string service_s,vector <string> supportedFormats
         // Регистрация сервиса на потоке D-Bus	
 	QDBusConnection dbusConnection = QDBusConnection::sessionBus();
         if (dbusConnection.registerService(service)){
-            qDebug() << "Service registered successfully";
+            qInfo() << "Service registered successfully.";
         } else {
-            qDebug() << "Failed to register service:" << QDBusConnection::sessionBus().lastError().message();
-            exit(1);
+            qDebug() << QDBusConnection::sessionBus().lastError().message();
+            qFatal("Failed to register service.\n");
         }
 
         // Регистрация интерфейса  корневым путем "/"
         if (dbusConnection.registerObject("/", this, QDBusConnection::ExportAllSlots | QDBusConnection::ExportAllSignals)) {
             qDebug() << "Object registered successfully";
         } else {
-            qDebug() << "Failed to register object:" << QDBusConnection::sessionBus().lastError().message();
-            exit(1);
-        }
+            qDebug() << QDBusConnection::sessionBus().lastError().message();
+            qFatal("Failed to register object.\n");
+	}
 }
-
-SharingService::~SharingService() {
-        // Очистка сервиса
-        QDBusConnection::sessionBus().unregisterService(service);
-        qDebug() << "Service unregistered.";
-    }
 
 void SharingService::OpenFile(const QString &path){
 	std::string path_s = path.toStdString();
@@ -38,35 +32,22 @@ void SharingService::OpenFile(const QString &path){
 	//emit fileOpened(path);
 }
 
-void SharingService::start(const string path_s){
-	QString path = QString::fromStdString(path_s);
+void SharingService::start(){
 	//Подключаемся к интерфесу для регистрации нашего сервиса
-	iface = new QDBusInterface("com.system.sharing", "/", "com.system.sharing", QDBusConnection::sessionBus(),this);
+	auto iface = new QDBusInterface("com.system.sharing", "/", "com.system.sharing", QDBusConnection::sessionBus(),this);
         if (!iface->isValid()) {
-        	qDebug() << "Invalid interface:" << iface->lastError().message();
-        	exit(-1);
+                qDebug() << iface->lastError().message();
+        	qFatal("Invalid interface.\n");
         }
         
 	//connect(this, &SharingService::fileOpened,this, &SharingService::OpenFile);
         QDBusMessage reply = iface->call("RegisterService", service, supportedFormats);
         if (reply.type() == QDBusMessage::ErrorMessage) {
-        	qDebug() << "Failed to connect to interface:" << reply.errorMessage();
-		exit(-1);
+                qDebug() << reply.errorMessage();
+        	qFatal("Failed to connect to the service interface.\n");
         } else {
-        	qDebug() << "service registered successfully:" << service;
+        	qInfo() << "The Service registered successfully:" << service;
         }
-
-	QDBusPendingCall pcall  = iface->asyncCall("OpenFile", path);
-	auto watcher = new QDBusPendingCallWatcher(pcall, this);
-	QObject::connect(watcher, &QDBusPendingCallWatcher::finished, this,
-                     [&](QDBusPendingCallWatcher *w) {
-        	     	QDBusPendingReply<void> reply(*w);
-			if(reply.isError()){
-				qDebug() << "Error to read the file " << reply.error().message();
-			}else{
-				qDebug() << "Readin the  file was successfule";
-			}
-        });
 	//emit fileOpened(path);
 }
 

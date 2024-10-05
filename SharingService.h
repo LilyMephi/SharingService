@@ -25,17 +25,14 @@ using namespace std;
 
 class QUILIBSHARED_EXPORT SharingService : public QObject {
 	Q_OBJECT
-	Q_CLASSINFO("D-Bus Interface", "com.sharing.service")
+	//Q_CLASSINFO("D-Bus Interface", "com.sharing.service")
         public:
 		explicit SharingService(string service,vector<string> supportedFormats, function<void(const string path)> openFunc);
-		~SharingService();
 		function<void(const string path)>OpenFile_s;
-		void start(const string path);
-		
-		
+		void start();
 	signals:
 		void fileOpened(const QString &path);
-	private slots:
+	public slots:
 		void OpenFile(const QString &path);
 	private:
 		QString service;
