@@ -19,7 +19,7 @@
 2. Создайте проект с помощью `qmake`:
 
   ```bush
-   qmake MyLib.pro`
+   qmake MyLib.pro
    ```
 
 3. Соберите библиотеку:
