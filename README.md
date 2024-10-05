@@ -5,34 +5,24 @@
 ## Установка
 
 1. Клонируйте репозиторий или скачайте исходный код библиотеки:
-
-   ```bash
+```bash
    git clone https://github.com/LilyMephi/SharingService.git
    cd SharingService
-   ```
-   
-
+```
 2. Создайте проект с помощью `qmake`:
 
-  ```bush
+```bush
    qmake MyLib.pro
-   ```
-
+```
 3. Соберите библиотеку:
-
-  ```bash
+```bash
    make
-   ```
-   
-
+```
 4. Перед запуском приложения, экспортируйте переменную окружения `LD_LIBRARY_PATH`, указывая путь к вашей библиотеке:
-
-   ```bash
+```bash
    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/lib/SharingService
-   ```
-   
-
-   Замените `/path/to/lib` на фактический путь к директории, где находится ваша динамическая библиотека.
+```
+Замените `/path/to/lib` на фактический путь к директории, где находится ваша динамическая библиотека.
 
 ## Использование
 
@@ -41,24 +31,21 @@
 ## Примеры
 
 Библиотека содержит несколько примеров использования. Чтобы их запустить, ознакомьтесь с соответствующими файлами:
-   ```bash
-    git clone https://github.com/LilyMephi/DBusSharing.git
-    cd DBusSharing
-    qmake project.pro
-    make
-    qmake client.pro
-    make
-   ```
+```bash
+   git clone https://github.com/LilyMephi/DBusSharing.git
+   cd DBusSharing
+   qmake project.pro
+   make
+   qmake client.pro
+   make
+```
 в разных терминалах запустите:
-   ```bash
-    ./SharingService
-    ./ClientService
-   ```
-
+```bash
+   ./SharingService
+   ./ClientService
+```
 ## Зависимости
-
 Для компиляции и работы библиотеки вам потребуются следующие зависимости:
-
 - QtD-Bus (необходимые модули для работы с DBus)
 - Qt5
 
